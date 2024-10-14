@@ -18,6 +18,10 @@ namespace DotNetCrudWebApi.Controllers
         }
 
         // Get : api/Movies
+        /// <summary>
+        /// Get Moveis
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovieModel>>> GetMovies()
         {
@@ -37,6 +41,11 @@ namespace DotNetCrudWebApi.Controllers
         }
 
         // Get : api/Movies/2
+        /// <summary>
+        /// GetMovie
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieModel>> GetMovie(int id)
         {
@@ -61,6 +70,11 @@ namespace DotNetCrudWebApi.Controllers
         }
 
         // Post : api/Movies
+        /// <summary>
+        /// PostMovie
+        /// </summary>
+        /// <param name="movie"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<MovieModel>> PostMovie(MovieModel movie)
         {
@@ -78,6 +92,12 @@ namespace DotNetCrudWebApi.Controllers
         }
 
         // Put : api/Movies/2
+        /// <summary>
+        /// PutMovie
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="movie"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<ActionResult<MovieModel>> PutMovie(int id, MovieModel movie)
         {
@@ -110,6 +130,11 @@ namespace DotNetCrudWebApi.Controllers
         }
 
         // Delete : api/Movies/2
+        /// <summary>
+        /// DeleteMovie
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<MovieModel>> DeleteMovie(int id)
         {
