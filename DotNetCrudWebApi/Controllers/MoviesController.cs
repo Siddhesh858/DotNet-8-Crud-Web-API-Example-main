@@ -21,36 +21,60 @@ namespace DotNetCrudWebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovieModel>>> GetMovies()
         {
-            if (_appDbContext.Movies == null)
+            try
             {
-                return NotFound();
+                if (_appDbContext.Movies == null)
+                {
+                    return NotFound();
+                }
+                return await _appDbContext.Movies.ToListAsync();
             }
-            return await _appDbContext.Movies.ToListAsync();
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // Get : api/Movies/2
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieModel>> GetMovie(int id)
         {
-            if (_appDbContext.Movies is null)
+            try
             {
-                return NotFound();
+                if (_appDbContext.Movies is null)
+                {
+                    return NotFound();
+                }
+                var movie = await _appDbContext.Movies.FindAsync(id);
+                if (movie is null)
+                {
+                    return NotFound();
+                }
+                return movie;
             }
-            var movie = await _appDbContext.Movies.FindAsync(id);
-            if (movie is null)
+            catch (Exception)
             {
-                return NotFound();
+
+                throw;
             }
-            return movie;
         }
 
         // Post : api/Movies
         [HttpPost]
         public async Task<ActionResult<MovieModel>> PostMovie(MovieModel movie)
         {
-            _appDbContext.Movies.Add(movie);
-            await _appDbContext.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, movie);
+            try
+            {
+                _appDbContext.Movies.Add(movie);
+                await _appDbContext.SaveChangesAsync();
+                return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, movie);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // Put : api/Movies/2
@@ -89,18 +113,26 @@ namespace DotNetCrudWebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<MovieModel>> DeleteMovie(int id)
         {
-            if (_appDbContext.Movies is null)
+            try
             {
-                return NotFound();
+                if (_appDbContext.Movies is null)
+                {
+                    return NotFound();
+                }
+                var movie = await _appDbContext.Movies.FindAsync(id);
+                if (movie is null)
+                {
+                    return NotFound();
+                }
+                _appDbContext.Movies.Remove(movie);
+                await _appDbContext.SaveChangesAsync();
+                return NoContent();
             }
-            var movie = await _appDbContext.Movies.FindAsync(id);
-            if (movie is null)
+            catch (Exception)
             {
-                return NotFound();
+
+                throw;
             }
-            _appDbContext.Movies.Remove(movie);
-            await _appDbContext.SaveChangesAsync();
-            return NoContent();
         }
     }
 }
